@@ -1,16 +1,37 @@
-#include <stdio.h>
-int main()
+#include<stdio.h>
+#include<string.h>
+
+int main( )
 {
-    FILE *fp = fopen("Jerry.txt", "r");
-    FILE *gp = fopen("Zerin.txt", "w");
+    FILE *fp;
+    FILE *fpo;
+    char dr[50];
 
-    char wd[15];
-    while (fscanf(fp, "%s", wd)!=EOF)
+    fp = fopen("input.txt ", "r");
+    fpo = fopen("output.txt", "a") ;
+
+    if ( fp == NULL )
     {
-        char FL = wd[0];
+        printf( "failed to open." ) ;
+    }
+    else
+    {
+        while( fgets(dr, 50, fp) != NULL )
+        {
+            if ( strlen ( dr ) > 0 )
+            {
 
-        fputc(FL, gp);
+                fputs(dr, fpo) ;
+                fputs("hello", fpo) ;
+                fputs("\n", fpo) ;
+            }
+        }
+
+        fclose(fp) ;
     }
 
     return 0;
 }
+
+
+//read and paste
