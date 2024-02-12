@@ -1,52 +1,66 @@
-#include <bits/stdc++.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-using namespace std;
 
-#define vr 7
+struct Node {
+    int data;
+    struct Node* next;
+};
 
-int graph [vr][vr]={0};
-
-void cgraph (int n1, int n2){
-    graph[n1][n2]=1;
-    graph[n2][n1]=1;
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
 }
-void printMatrix(){
-    cout <<"   1 2 3 4 5 6 7"<< endl << endl;
-    for (int i=1; i<=vr; i++){
-        cout << i << ": ";
-        for (int j=1; j<=vr; j++){
-            cout << graph [i][j] << " ";
+
+void addEdge(struct Node* adjacencyList[], int src, int dest) {
+
+    struct Node* newNode = createNode(dest);
+    newNode->next = adjacencyList[src];
+    adjacencyList[src] = newNode;
+
+    newNode = createNode(src);
+    newNode->next = adjacencyList[dest];
+    adjacencyList[dest] = newNode;
+}
+
+void printAdjacencyList(struct Node* adjacencyList[], int vertices) {
+    int i;
+    for ( i = 0; i < vertices; i++) {
+        struct Node* temp = adjacencyList[i];
+        printf("%d: ", i);
+        while (temp != NULL) {
+            printf("%d", temp->data);
+            temp = temp->next;
+            if (temp != NULL) {
+                printf("->");
+            }
         }
-        cout << endl;
+        printf("\n");
     }
 }
 
-void printAdjacencyList(){
-    for (int i=1; i<= vr; i++){
-        cout<< i <<": ";
-        for (int j=1; j<= vr; j++){
-            if (graph[i][j]==1)
-                cout << j <<" ";
-        }
-        cout << endl;
-    }
-}
+int main() {
+    int i;
+    int vertices = 5;
 
-int main ()
-{
-    cgraph(1,2);
-    cgraph(1,3);
-    cgraph(2,3);
-    cgraph(2,5);
-    cgraph(2,6);
-    cgraph(3,4);
-    cgraph(3,6);
-    cgraph(4,7);
-    cgraph(5,6);
-    cgraph(5,7);
-    cout <<"printMatrix : "<<endl;
-    printMatrix();
-    cout <<"printAdjacencyList : " << endl;
-    printAdjacencyList ();
+
+    struct Node* adjacencyList[vertices];
+
+    for ( i = 0; i < vertices; i++) {
+        adjacencyList[i] = NULL;
+    }
+
+    addEdge(adjacencyList, 0, 1);
+    addEdge(adjacencyList, 0, 4);
+    addEdge(adjacencyList, 1, 2);
+    addEdge(adjacencyList, 1, 3);
+    addEdge(adjacencyList, 1, 4);
+    addEdge(adjacencyList, 2, 3);
+    addEdge(adjacencyList, 3, 4);
+
+    printAdjacencyList(adjacencyList, vertices);
+
     return 0;
 }
