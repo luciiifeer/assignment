@@ -1,0 +1,40 @@
+#include <graphics.h>
+#include <conio.h>
+
+int main() {
+    int gd = DETECT, gm;
+    initgraph(&gd, &gm, "");
+
+    int x = 500; // Initial x-coordinate of the car
+
+    while (x >= -200) { // Move the car till it's completely off-screen to the left
+        cleardevice(); // Clear the screen to erase previous drawing
+
+        // Draw the road
+        line(0, 350, getmaxx(), 350); // Straight line below the circles
+        line(0, 250, getmaxx(), 250); // Another line at y-coordinate 250
+
+        // Draw the car
+        circle(x + 100, 300, 20); // Left wheel
+        circle(x + 300, 300, 20); // Right wheel
+        line(x, 300, x + 80, 300); // Left side
+        line(x, 300, x + 100, 250); // Left roof
+        line(x + 120, 300, x + 280, 300); // Right side
+        line(x + 320, 300, x + 380, 300); // Right roof
+        line(x + 100, 250, x + 380, 250); // Top
+        line(x + 150, 250, x + 200, 200); // Front
+        line(x + 200, 200, x + 330, 200); // Hood
+        line(x + 330, 200, x + 350, 250); // Front roof
+        line(x + 380, 250, x + 380, 300); // Rear pillar
+        line(x, 300, x + 80, 300); // Left bottom
+        line(x, 300, x + 80, 300); // Right bottom
+
+        // Incrementally move the car to the left
+        x -= 5;
+
+        delay(50); // Pause for a short time to slow down the animation
+    }
+
+    closegraph(); // Close the graphics window after the animation finishes
+    return 0;
+}
